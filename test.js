@@ -1,71 +1,182 @@
 $( document ).ready(function() {
-	// Handler for .ready() called.
-	var TTime = 10
-	var time_left = TTime;
 
-	// variables for time units
-	var minutes, seconds;
+	var WorkTime;
+	var workTimeLeft;
 
+	var RelaxTime;
+	var relaxTimeLeft;
+
+	// Initialization of the Work Clock
 	var clockWork = $("#clockWork");
+	// clockUpdate(clockWork, workTimeLeft);
 
-	// do some time calculations
-	minutes = parseInt(time_left / 60);
-	seconds = parseInt(time_left % 60);
-	 
-	// format countdown string + set tag value
-	clockWork.html(minutes + " m, " + seconds + " s"); 
+	// Initialization of the Relax Clock
+	var clockRelax = $("#clockRelax");
+	// clockUpdate(clockRelax, relaxTimeLeft);
 
-	// update the tag with id "countdown" every 1 second
-    var myClock;
+	// the work time interval handler
+    var workClockHandler;
 
-    $("#start").click(function(){
-    	if(time_left == TTime){
-    		time_left--;
+    // the relax time interval handler
+    var relaxClockHandler;
+
+    $("#workHour").keyup(function(){
+    	var v = this.value;
+   		var vReplaced = v.replace(/[^0-9]/g, '');
+    	if ( v != vReplaced) {
+	       this.value = vReplaced;
+	    }
+    });
+
+ //    $("#workHour").keyup(function () {
+ //    	alert("here");
+ //    	alert(this.value);
+ //    	alert($(this).val());
+	//     if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+	//        this.value = this.value.replace(/[^0-9\.]/g, '');
+	//     }
+	//     alert("here2");
+	// });
+
+    // WORK: add the event listener for the Start/Resume Button
+    $("#startWork").click(function(){
+    	var hours = $("#workHour").val();
+    	var minutes = $("#workMinute").val();
+    	var seconds = $("#workSecond").val();
+    	WorkTime = hours * 3600 + minutes * 60 + seconds;
+    	workTimeLeft = WorkTime;
+
+    	// there seems to have a delay at the beginning
+    	// without this it seems that we spend 2 seconds at the first second
+    	if(workTimeLeft <= 0){
+    		workTimeLeft = WorkTime;
     	}
+    	clockUpdate(clockWork, workTimeLeft);
+
+    	// When pressing the "Start" or "Resume" button
     	if($(this).text() == "Start" || $(this).text() == "Resume"){
+
+    		// we set the button text to "Pause"
     		$(this).text("Pause");
-    		myClock = setInterval(function () {
 
-				// do some time calculations
-				minutes = parseInt(time_left / 60);
-				seconds = parseInt(time_left % 60);
-				 
-				// format countdown string + set tag value
-				clockWork.html(minutes + " m, " + seconds + " s"); 
+    		// start the countdown through setInterval
+    		workClockHandler = setInterval(function () {
+				
 
-				if(time_left == 0){
-					// here we have to use $("#start") because we are inside the myClock block
+				// when times up we disable the 
+				if(workTimeLeft == 0){
+					// here we have to use $("#startWork") because we are inside the workClockHandler block
 					// we cannot see the outer $(this)
-					$("#start").attr("disabled", "disabled");
-					clearInterval(myClock);
+					// $("#startWork").attr("disabled", "disabled");
+					clearInterval(workClockHandler);
+					$("#startWork").text("Start");
+					alert("Work Complete!");
+
+					$("#startRelax").removeAttr("disabled");
+					$("#resetRelax").removeAttr("disabled");
+
+					$("#startWork").attr("disabled", "disabled");
+					$("#resetWork").attr("disabled", "disabled");
+
+					$(".audio_holder").show();
+					$("#audio_player")[0].play();
 				}
 
-				time_left--;
-			 
+				workTimeLeft--;
+				if(workTimeLeft >= 0){
+					clockUpdate(clockWork, workTimeLeft);
+				}
 		    }, 1000);
     	}else{
     		$(this).text("Resume");
-    		clearInterval(myClock);
+    		clearInterval(workClockHandler);
     	}
 		
 	});
 
-	$("#reset").click(function(){
-		if(myClock != undefined){
-			clearInterval(myClock);
+	$("#resetWork").click(function(){
+		if(workClockHandler != undefined){
+			clearInterval(workClockHandler);
 		}
-		$("#start").removeAttr("disabled");
-		$("#start").text("Start");
-		time_left = 10;
+		$("#startWork").text("Start");
+		workTimeLeft = WorkTime;
+		clockUpdate(clockWork, workTimeLeft); 
+	})
 
-		// do some time calculations
-		minutes = parseInt(time_left / 60);
-		seconds = parseInt(time_left % 60);
-		 
-		// format countdown string + set tag value
-		clockWork.html(minutes + " m, " + seconds + " s"); 
+	// ===================================================================================== //
+
+	// RELAX: add the event listener for the Start/Resume Button
+    $("#startRelax").click(function(){
+    	var hours = $("#relaxHour").val();
+    	var minutes = $("#relaxMinute").val();
+    	var seconds = $("#relaxSecond").val();
+    	RelaxTime = hours * 3600 + minutes * 60 + seconds;
+    	relaxTimeLeft = RelaxTime;
+
+    	// there seems to have a delay at the beginning
+    	// without this it seems that we spend 2 seconds at the first second
+    	if(relaxTimeLeft <= 0){
+    		relaxTimeLeft = RelaxTime;
+    	}
+
+    	clockUpdate(clockRelax, relaxTimeLeft);
+
+    	// When pressing the "Start" or "Resume" button
+    	if($(this).text() == "Start" || $(this).text() == "Resume"){
+
+    		// we set the button text to "Pause"
+    		$(this).text("Pause");
+
+    		// start the countdown through setInterval
+    		relaxClockHandler = setInterval(function () {
+				
+				// when times up we disable the 
+				if(relaxTimeLeft == 0){
+					// here we have to use $("#startRelax") because we are inside the relaxClockHandler block
+					// we cannot see the outer $(this)
+					// $("#startRelax").attr("disabled", "disabled");
+					clearInterval(relaxClockHandler);
+					$("#startRelax").text("Start");
+					alert("Time For Work!");
+
+					$("#startWork").removeAttr("disabled");
+					$("#resetWork").removeAttr("disabled");
+
+					$("#startRelax").attr("disabled", "disabled");
+					$("#resetRelax").attr("disabled", "disabled");
+				}
+
+				relaxTimeLeft--;
+				if (relaxTimeLeft >= 0){
+					clockUpdate(clockRelax, relaxTimeLeft);
+				}
+				
+
+			 
+		    }, 1000);
+    	}else{
+    		$(this).text("Resume");
+    		clearInterval(relaxClockHandler);
+    	}
+		
+	});
+
+	$("#resetRelax").click(function(){
+		if(relaxClockHandler != undefined){
+			clearInterval(relaxClockHandler);
+		}
+		$("#startRelax").text("Start");
+		relaxTimeLeft = RelaxTime;
+		clockUpdate(clockRelax, relaxTimeLeft); 
 	})
 });
 
-
+function clockUpdate(clock, timeLeft){
+	var hours, minutes, seconds;
+	hours = parseInt(timeLeft / 3600);
+	timeLeft = timeLeft % 3600;
+	minutes = parseInt(timeLeft / 60);
+	seconds = parseInt(timeLeft % 60);
+	clock.html(hours + " h, " + minutes + " m, " + seconds + " s");
+}
 
