@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Work/Relax Cycle</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+  <div class="jumbotron">
+    <div class="page-header container">
+      <h1>Work-Relax Cycle</h1>
+      <p class="lead">Work 25 minutes, Relax 5 minutes and Repeat!</p>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row time-input">
+          <p></p>
+          <div id="alarm-dialog">
+
+            <h2>Work</h2>
+
+            <label class="hours">
+              Hours
+              <input type="number" value="0" min="0" />
+            </label>
+
+            <label class="minutes">
+              Minutes
+              <input type="number" value="0" min="0" />
+            </label>
+
+            <label class="seconds">
+              Seconds
+              <input type="number" value="0" min="0" />
+            </label>
+
+            <p></p>
+
+            <button type="button" class="btn btn-default btn-lg">Start</button>
+            <button type="button" class="btn btn-default btn-lg">Reset</button>
+          </div>
+        </div>
+        <p></p>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row time-input">
+          <p></p>
+          <div id="alarm-dialog">
+
+            <h2>Relax</h2>
+
+            <label class="hours">
+              Hours
+              <input type="number" value="0" min="0" />
+            </label>
+
+            <label class="minutes">
+              Minutes
+              <input type="number" value="0" min="0" />
+            </label>
+
+            <label class="seconds">
+              Seconds
+              <input type="number" value="0" min="0" />
+            </label>
+
+            <p></p>
+
+            <button type="button" class="btn btn-default btn-lg">Start</button>
+            <button type="button" class="btn btn-default btn-lg">Reset</button>
+          </div>
+        </div>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="row clockArea">
+      <div class="col-md-12">for the clock</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">for the alarm and stop</div>
+      <div class="col-md-6">for the settings</div>
+    </div>
+
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script type="text/javascript" src="scripts/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+  <script type="text/javascript" src="scripts/CountdownClock.js"></script>
+  <script type="text/javascript" src="scripts/test.js"></script>
+</body>
+</html>

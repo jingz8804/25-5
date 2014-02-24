@@ -15,11 +15,50 @@ $( document ).ready(function() {
 	    }
     });
 
+    // retrieve user supplied time units
+    if(typeof(Storage)!=="undefined"){
+        // for the work clock
+        if(localStorage.workHours){
+            $("#workHour").val(localStorage.workHours);
+        }
+
+        if(localStorage.workMinutes){
+            $("#workMinute").val(localStorage.workMinutes);
+        }
+
+        if(localStorage.workSeconds){
+            $("#workSecond").val(localStorage.workSeconds);
+        }
+
+        // for the relax clock
+        if(localStorage.relaxHours){
+            $("#relaxHour").val(localStorage.relaxHours);
+        }
+
+        if(localStorage.relaxMinutes){
+            $("#relaxMinute").val(localStorage.relaxMinutes);
+        }
+
+        if(localStorage.relaxSeconds){
+            $("#relaxSecond").val(localStorage.relaxSeconds);
+        }
+
+    }
+    
+
     // WORK: add the event listener for the Start/Resume Button
     $("#startWork").click(function(){
     	var hours = $("#workHour").val();
     	var minutes = $("#workMinute").val();
     	var seconds = $("#workSecond").val();
+
+        if(typeof(Storage)!=="undefined"){
+            // for the work clock
+            localStorage.workHours = hours;
+            localStorage.workMinutes = minutes;
+            localStorage.workSeconds = seconds;
+        }
+
 
     	workClock = new CountdownClock(hours, minutes, seconds);
 
@@ -56,7 +95,7 @@ $( document ).ready(function() {
 	});
 
 	$("#resetWork").click(function(){
-		if(workClock != undefined){
+		if(workClock !== undefined){
 			workClock.reset();
 			$("#startWork").text("Start");
 			clockUpdate(workDiv, workClock.getTimeLeft()); 
@@ -70,6 +109,13 @@ $( document ).ready(function() {
     	var hours = $("#relaxHour").val();
     	var minutes = $("#relaxMinute").val();
     	var seconds = $("#relaxSecond").val();
+
+        if(typeof(Storage)!=="undefined"){
+            // for the work clock
+            localStorage.relaxHours = hours;
+            localStorage.relaxMinutes = minutes;
+            localStorage.relaxSeconds = seconds;
+        }
 
     	relaxClock = new CountdownClock(hours, minutes, seconds);
 
@@ -106,7 +152,7 @@ $( document ).ready(function() {
 	});
 
 	$("#resetRelax").click(function(){
-		if(relaxClock != undefined){
+		if(relaxClock !== undefined){
 			relaxClock.reset();
 			$("#startRelax").text("Start");
 			clockUpdate(relaxDiv, relaxClock.getTimeLeft()); 
