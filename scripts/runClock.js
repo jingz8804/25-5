@@ -46,22 +46,24 @@ $( document ).ready(function() {
         var buttonText = $(this).text();
 
         var isWork = $(this).hasClass("work");
-        var classPrefix = "work";
+        var clickedClassPrefix = "work";
+        var unClickedClassPrefix = "relax";
         if(isWork !== true){
-            classPrefix = "relax";
+            clickedClassPrefix = "relax";
+            unClickedClassPrefix = "work";
         }
 
         // we only read the user input when the button is in "Start" mode
         if(buttonText == "Start"){
-            hours = $("#"+classPrefix+"Hour").val();
-            minutes = $("#"+classPrefix+"Minute").val();
-            seconds = $("#"+classPrefix+"Second").val();
+            hours = $("#"+clickedClassPrefix+"Hour").val();
+            minutes = $("#"+clickedClassPrefix+"Minute").val();
+            seconds = $("#"+clickedClassPrefix+"Second").val();
         }
         
         if(typeof(Storage) !== "undefined"){
-            localStorage.setItem(classPrefix + "Hours", hours);
-            localStorage.setItem(classPrefix + "Minutes", minutes);
-            localStorage.setItem(classPrefix + "Seconds", seconds);
+            localStorage.setItem(clickedClassPrefix + "Hours", hours);
+            localStorage.setItem(clickedClassPrefix + "Minutes", minutes);
+            localStorage.setItem(clickedClassPrefix + "Seconds", seconds);
         }
 
         clock = new CountdownClock(hours, minutes, seconds);
@@ -71,7 +73,7 @@ $( document ).ready(function() {
         }
 
         // we should change the clockUpdate function to show the digital clock
-        clockUpdate($("#"+classPrefix+"Div"), clock.getTimeLeft())
+        clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft())
         
 
         // When pressing the "Start" or "Resume" button
@@ -80,31 +82,15 @@ $( document ).ready(function() {
             // we set the button text to "Pause"
             $(this).text("Pause");
 
-            if(isWork === true){ // TODO: refactor this part
-                // start the countdown through setInterval
-                var elements = {
-                    startButtonToChangeText: $(this),
-                    startButtonToEnable: $("#relaxStart"),
-                    resetButtonToEnable: $("#relaxReset"),
-                    startButtonToDisable: $(this),
-                    resetButtonToDisable: $("#workReset"),
-                    playerHolder: $(".audio_holder"),
-                    player: $("#audio_player")[0]
-                };
+            var elements = {
+                startButtonToChangeText: $(this),
+                buttonToEnable: unClickedClassPrefix,
+                buttonToDisable: clickedClassPrefix,
+                playerHolder: $(".audio_holder"),
+                player: $("#audio_player")[0]
+            };
 
-                clock.start(elementsUpdate, elements, clockUpdate, workDiv);
-            }else{
-                var elements = {
-                    startButtonToChangeText: $(this),
-                    startButtonToEnable: $("#workStart"),
-                    resetButtonToEnable: $("#workReset"),
-                    startButtonToDisable: $(this),
-                    resetButtonToDisable: $("#relaxReset"),
-                    playerHolder: $(".audio_holder"),
-                    player: $("#audio_player")[0]
-                };
-                clock.start(elementsUpdate, elements, clockUpdate, relaxDiv);
-            }
+            clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"));
         }else{
             $(this).text("Resume");
             clock.pause();
@@ -113,15 +99,15 @@ $( document ).ready(function() {
 
     $(".reset").click(function(){
         var isWork = $(this).hasClass("work");
-        var classPrefix = "work";
+        var clickedClassPrefix = "work";
         if(isWork !== true){
-            classPrefix = "relax";
+            clickedClassPrefix = "relax";
         }
 
         if(clock !== undefined){
             clock.reset();
-            $("#"+classPrefix+"Start").text("Start");
-            clockUpdate($("#"+classPrefix+"Div"), clock.getTimeLeft());
+            $("#"+clickedClassPrefix+"Start").text("Start");
+            clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft());
         }
     });
     

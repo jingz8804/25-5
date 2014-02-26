@@ -9,12 +9,17 @@ function clockUpdate(clock, timeLeft){
 
 function elementsUpdate(elements){
 	elements.startButtonToChangeText.text("Start");
+	var toEnable = elements.buttonToEnable;
+	var toDisable = elements.buttonToDisable;
 
-	elements.startButtonToEnable.removeAttr("disabled");
-	elements.resetButtonToEnable.removeAttr("disabled");
+	$("button." + toEnable).removeAttr("disabled");
+	$("button." + toDisable).attr("disabled", "disabled");
 
-	elements.startButtonToDisable.attr("disabled", "disabled");
-	elements.resetButtonToDisable.attr("disabled", "disabled");
+	// elements.startButtonToEnable.removeAttr("disabled");
+	// elements.resetButtonToEnable.removeAttr("disabled");
+
+	// elements.startButtonToDisable.attr("disabled", "disabled");
+	// elements.resetButtonToDisable.attr("disabled", "disabled");
 
 	elements.playerHolder.show();
 	elements.player.play();
