@@ -100,7 +100,7 @@ $( document ).ready(function() {
         }
 
         if(clock.getTimeLeft() <= 0){
-            clock.reset();
+            clock.setTime(0);
         }
 
         // we should change the clockUpdate function to show the digital clock
@@ -150,4 +150,8 @@ $( document ).ready(function() {
 		player.pause();
 		player.currentTime = 0;
 	});
+
+
+
+
 });
