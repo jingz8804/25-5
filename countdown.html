@@ -5,27 +5,27 @@
 
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/CountdownClock.js"></script>
-    <script type="text/javascript" src="scripts/test.js"></script>
+    <script type="text/javascript" src="scripts/runClock.js"></script>
   </head>
   <body>
     <div id="div1">
-      <input type="text" id="workHour" placeholder="h"> : 
-      <input type="text" id="workMinute" placeholder="m"> : 
-      <input type="text" id="workSecond" placeholder="s">
+      <input type="text" class="work" id="workHour" placeholder="h"> : 
+      <input type="text" class="work" id="workMinute" placeholder="m"> : 
+      <input type="text" class="work" id="workSecond" placeholder="s">
     </div>
-    <button type="button" id="startWork">Start</button>
-    <button type="button" id="resetWork">Reset</button>
+    <button type="button" class="work start" id="startWork">Start</button>
+    <button type="button" class="work reset" id="resetWork">Reset</button>
 
     <div id="clockWork">
     </div>
 
     <div id="div2">
-      <input type="text" id="relaxHour" placeholder="h"> : 
-      <input type="text" id="relaxMinute" placeholder="m"> : 
-      <input type="text" id="relaxSecond" placeholder="s">
+      <input type="text" class="relax" id="relaxHour" placeholder="h"> : 
+      <input type="text" class="relax" id="relaxMinute" placeholder="m"> : 
+      <input type="text" class="relax" id="relaxSecond" placeholder="s">
     </div>
-    <button type="button" id="startRelax" disabled="disabled">Start</button>
-    <button type="button" id="resetRelax" disabled="disabled">Reset</button>
+    <button type="button" class="relax start" id="startRelax" disabled="disabled">Start</button>
+    <button type="button" class="relax reset" id="resetRelax" disabled="disabled">Reset</button>
     <div id="clockRelax">
     </div>
 

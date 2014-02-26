@@ -62,8 +62,6 @@ $( document ).ready(function() {
 
     	workClock = new CountdownClock(hours, minutes, seconds);
 
-    	// there seems to have a delay at the beginning
-    	// without this it seems that we spend 2 seconds at the first second
     	if(workClock.getTimeLeft() <= 0){
     		workClock.reset();
     	}
@@ -118,9 +116,6 @@ $( document ).ready(function() {
         }
 
     	relaxClock = new CountdownClock(hours, minutes, seconds);
-
-    	// there seems to have a delay at the beginning
-    	// without this it seems that we spend 2 seconds at the first second
 
     	if(relaxClock.getTimeLeft() <= 0){
     		relaxClock.reset();
