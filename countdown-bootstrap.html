@@ -37,23 +37,23 @@
 
             <label class="hours">
               Hours
-              <input type="number" value="0" min="0" />
+              <input type="text" class="work" id="workHour" placeholder="h"/>
             </label>
 
             <label class="minutes">
               Minutes
-              <input type="number" value="0" min="0" />
+              <input type="text" class="work" id="workMinute" placeholder="m"/>
             </label>
 
             <label class="seconds">
               Seconds
-              <input type="number" value="0" min="0" />
+              <input type="text" class="work" id="workSecond" placeholder="s"/>
             </label>
 
             <p></p>
 
-            <button type="button" class="btn btn-default btn-lg">Start</button>
-            <button type="button" class="btn btn-default btn-lg">Reset</button>
+            <button type="button" class="btn btn-default btn-lg work start" id="workStart">Start</button>
+            <button type="button" class="btn btn-default btn-lg work reset" id="workReset">Reset</button>
           </div>
         </div>
         <p></p>
@@ -68,23 +68,23 @@
 
             <label class="hours">
               Hours
-              <input type="number" value="0" min="0" />
+              <input type="number" class="relax" id="relaxHour" placeholder="h"/>
             </label>
 
             <label class="minutes">
               Minutes
-              <input type="number" value="0" min="0" />
+              <input type="number" class="relax" id="relaxMinute" placeholder="m"/>
             </label>
 
             <label class="seconds">
               Seconds
-              <input type="number" value="0" min="0" />
+              <input type="number" class="relax" id="relaxSecond" placeholder="s"/>
             </label>
 
             <p></p>
 
-            <button type="button" class="btn btn-default btn-lg">Start</button>
-            <button type="button" class="btn btn-default btn-lg">Reset</button>
+            <button type="button" class="btn btn-default btn-lg relax start" id="relaxStart" disabled="disabled">Start</button>
+            <button type="button" class="btn btn-default btn-lg relax start" id="relaxReset" disabled="disabled">Reset</button>
           </div>
         </div>
         <p></p>
@@ -92,9 +92,20 @@
     </div>
 
     <div class="row clockArea">
-      <div class="col-md-12">
-      for the clock
-        <div id="clock" class="light">
+      <div class="col-md-6">
+      <div id="workDiv">
+      </div>
+        <div class="clock dark">
+            <div class="display">
+                <div class="digits"></div>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+      <div id="relaxDiv">
+      </div>
+        <div class="clock light">
             <div class="display">
                 <div class="digits"></div>
             </div>
@@ -103,7 +114,15 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">for the alarm and stop</div>
+      <div class="col-md-6">
+        for the alarm and stop
+        <div class="audio_holder" style="display: none;text-align: center;">
+          <audio id="audio_player" controls="controls"> 
+            <source src="audio/test.mp3" type='audio/mpeg' />
+            Your browser does not support the audio tag.
+          </audio>
+        </div>
+      </div>
       <div class="col-md-6">for the settings</div>
     </div>
 
@@ -115,6 +134,6 @@
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
   <script type="text/javascript" src="scripts/CountdownClock.js"></script>
-  <script type="text/javascript" src="scripts/test.js"></script>
+  <script type="text/javascript" src="scripts/runClock.js"></script>
 </body>
 </html>

@@ -1,10 +1,27 @@
-function clockUpdate(clock, timeLeft){
+function clockUpdate(clock, timeLeft){	
 	var hours, minutes, seconds;
 	hours = parseInt(timeLeft / 3600);
 	timeLeft = timeLeft % 3600;
 	minutes = parseInt(timeLeft / 60);
 	seconds = parseInt(timeLeft % 60);
 	clock.html(hours + " h, " + minutes + " m, " + seconds + " s");
+
+	// var h1, h2, m1, m2, s1, s2;
+	// h1 = parseInt(hours / 10);
+	// h2 = hours % 10;
+	// m1 = parseInt(minutes / 10);
+	// m2 = minutes % 10;
+	// s1 = parseInt(seconds / 10);
+	// s2 = seconds % 10;
+
+	// digits.h1.attr('class', digit_to_name[h1]);
+	// digits.h2.attr('class', digit_to_name[h2]);
+	// digits.m1.attr('class', digit_to_name[m1]);
+	// digits.m2.attr('class', digit_to_name[m2]);
+	// digits.s1.attr('class', digit_to_name[s1]);
+	// digits.s2.attr('class', digit_to_name[s2]);
+
+	// clock.find('.digits').append(digit_holder);
 }
 
 function elementsUpdate(elements){
@@ -27,9 +44,6 @@ function elementsUpdate(elements){
 }
 
 function CountdownClock(hours, minutes, seconds){
-	var hoursLeft = hours;
-	var minutesLeft = minutes;
-	var secondsLeft = seconds;
 	var totalTime = hours * 3600 + minutes * 60 + seconds;
 	var timeLeft = totalTime;
 	var clockHandler;
@@ -40,13 +54,6 @@ function CountdownClock(hours, minutes, seconds){
 
 	this.getTimeLeft = function(){
 		return timeLeft;
-	}
-
-	this.reset = function(){
-		if(clockHandler != undefined){
-			clearInterval(clockHandler);
-		}
-		timeLeft = totalTime;
 	}
 
 	this.start = function(elementsUpdate, elements, clockUpdate, clockDiv){
@@ -64,9 +71,19 @@ function CountdownClock(hours, minutes, seconds){
 		}, 1000);
 	}
 
-	this.pause = function(){
-		if(clockHandler != undefined){
+	this.reset = function(){
+		if(clockHandler !== undefined){
 			clearInterval(clockHandler);
+		}
+		timeLeft = totalTime;
+	}
+
+	this.pause = function(){
+		if(clockHandler !== undefined){
+			clearInterval(clockHandler);
+			if(timeLeft >= 0){
+				clockUpdate(clockDiv, timeLeft);
+			}
 		}
 	}
 }

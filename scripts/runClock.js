@@ -12,29 +12,41 @@ $( document ).ready(function() {
     // retrieve user supplied time units
     if(typeof(Storage)!=="undefined"){
         // for the work clock
-        if(localStorage.workHours){
+        if(localStorage.workHours !=="undefined"){
             $("#workHour").val(localStorage.workHours);
+        }else{
+            $("#workHour").val(0);
         }
 
-        if(localStorage.workMinutes){
+        if(localStorage.workMinutes !=="undefined"){
             $("#workMinute").val(localStorage.workMinutes);
+        }else{
+            $("#workMinute").val(25);
         }
 
-        if(localStorage.workSeconds){
+        if(localStorage.workSeconds !=="undefined"){
             $("#workSecond").val(localStorage.workSeconds);
+        }else{
+            $("#workSecond").val(0);
         }
 
         // for the relax clock
-        if(localStorage.relaxHours){
+        if(localStorage.relaxHours !=="undefined"){
             $("#relaxHour").val(localStorage.relaxHours);
+        }else{
+            $("#relaxHour").val(0);
         }
 
-        if(localStorage.relaxMinutes){
+        if(localStorage.relaxMinutes !=="undefined"){
             $("#relaxMinute").val(localStorage.relaxMinutes);
+        }else{
+            $("#relaxMinute").val(5);
         }
 
-        if(localStorage.relaxSeconds){
+        if(localStorage.relaxSeconds !=="undefined"){
             $("#relaxSecond").val(localStorage.relaxSeconds);
+        }else{
+            $("#relaxSecond").val(0);
         }
 
     }
@@ -53,20 +65,39 @@ $( document ).ready(function() {
             unClickedClassPrefix = "work";
         }
 
-        // we only read the user input when the button is in "Start" mode
+        // we only read the user input and CREATE NEW CLOCK when the button is in "Start" mode
         if(buttonText == "Start"){
             hours = $("#"+clickedClassPrefix+"Hour").val();
             minutes = $("#"+clickedClassPrefix+"Minute").val();
             seconds = $("#"+clickedClassPrefix+"Second").val();
-        }
-        
-        if(typeof(Storage) !== "undefined"){
-            localStorage.setItem(clickedClassPrefix + "Hours", hours);
-            localStorage.setItem(clickedClassPrefix + "Minutes", minutes);
-            localStorage.setItem(clickedClassPrefix + "Seconds", seconds);
-        }
 
-        clock = new CountdownClock(hours, minutes, seconds);
+            // the input we got is text string! So be sure to convert it to integer first!
+            if(hours === ""){
+                hours = 0;
+            }else{
+                hours = parseInt(hours);
+            }
+
+            if(minutes === ""){
+                minutes = 0;
+            }else{
+                minutes = parseInt(minutes);
+            }
+
+            if(seconds === ""){
+                seconds = 0;
+            }else{
+                seconds = parseInt(seconds);
+            }
+
+            if(typeof(Storage) !== "undefined"){
+                localStorage.setItem(clickedClassPrefix + "Hours", hours);
+                localStorage.setItem(clickedClassPrefix + "Minutes", minutes);
+                localStorage.setItem(clickedClassPrefix + "Seconds", seconds);
+            }
+
+            clock = new CountdownClock(hours, minutes, seconds);
+        }
 
         if(clock.getTimeLeft() <= 0){
             clock.reset();
@@ -105,6 +136,7 @@ $( document ).ready(function() {
         }
 
         if(clock !== undefined){
+            // alert("here!");
             clock.reset();
             $("#"+clickedClassPrefix+"Start").text("Start");
             clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft());
