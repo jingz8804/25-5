@@ -1,9 +1,4 @@
 $( document ).ready(function() {
-	// Initialization of the Work Clock
-	var workDiv = $("#clockWork");
-	// Initialization of the Relax Clock
-	var relaxDiv = $("#clockRelax");
-
 	var clock;
 
     $("input").keyup(function(){
@@ -50,30 +45,24 @@ $( document ).ready(function() {
         var seconds;
         var buttonText = $(this).text();
 
+        var isWork = $(this).hasClass("work");
+        var classPrefix = "work";
+        if(isWork !== true){
+            classPrefix = "relax";
+        }
+
         // we only read the user input when the button is in "Start" mode
         if(buttonText == "Start"){
-            hours = $("#workHour").val();
-            minutes = $("#workMinute").val();
-            seconds = $("#workSecond").val();
+            hours = $("#"+classPrefix+"Hour").val();
+            minutes = $("#"+classPrefix+"Minute").val();
+            seconds = $("#"+classPrefix+"Second").val();
         }
-
-        var isWork = $(this).hasClass("work");
-        if(typeof(Storage) !== "undefined"){
-
-            if (isWork === true){
-                // for the work clock
-                localStorage.workHours = hours;
-                localStorage.workMinutes = minutes;
-                localStorage.workSeconds = seconds;
-            }else{
-                // for the work clock
-                localStorage.relaxHours = hours;
-                localStorage.relaxMinutes = minutes;
-                localStorage.relaxSeconds = seconds;   
-            }
-        }
-
         
+        if(typeof(Storage) !== "undefined"){
+            localStorage.setItem(classPrefix + "Hours", hours);
+            localStorage.setItem(classPrefix + "Minutes", minutes);
+            localStorage.setItem(classPrefix + "Seconds", seconds);
+        }
 
         clock = new CountdownClock(hours, minutes, seconds);
 
@@ -81,11 +70,9 @@ $( document ).ready(function() {
             clock.reset();
         }
 
-        if (isWork === true){ // we should change the clockUpdate function to show the digital clock
-            clockUpdate(workDiv, clock.getTimeLeft());
-        }else{
-            clockUpdate(relaxDiv, clock.getTimeLeft());
-        }
+        // we should change the clockUpdate function to show the digital clock
+        clockUpdate($("#"+classPrefix+"Div"), clock.getTimeLeft())
+        
 
         // When pressing the "Start" or "Resume" button
         if(buttonText == "Start" || buttonText == "Resume"){
@@ -97,10 +84,10 @@ $( document ).ready(function() {
                 // start the countdown through setInterval
                 var elements = {
                     startButtonToChangeText: $(this),
-                    startButtonToEnable: $("#startRelax"),
-                    resetButtonToEnable: $("#resetRelax"),
+                    startButtonToEnable: $("#relaxStart"),
+                    resetButtonToEnable: $("#relaxReset"),
                     startButtonToDisable: $(this),
-                    resetButtonToDisable: $("#resetWork"),
+                    resetButtonToDisable: $("#workReset"),
                     playerHolder: $(".audio_holder"),
                     player: $("#audio_player")[0]
                 };
@@ -109,10 +96,10 @@ $( document ).ready(function() {
             }else{
                 var elements = {
                     startButtonToChangeText: $(this),
-                    startButtonToEnable: $("#startWork"),
-                    resetButtonToEnable: $("#resetWork"),
+                    startButtonToEnable: $("#workStart"),
+                    resetButtonToEnable: $("#workReset"),
                     startButtonToDisable: $(this),
-                    resetButtonToDisable: $("#resetRelax"),
+                    resetButtonToDisable: $("#relaxReset"),
                     playerHolder: $(".audio_holder"),
                     player: $("#audio_player")[0]
                 };
@@ -126,18 +113,16 @@ $( document ).ready(function() {
 
     $(".reset").click(function(){
         var isWork = $(this).hasClass("work");
+        var classPrefix = "work";
+        if(isWork !== true){
+            classPrefix = "relax";
+        }
 
         if(clock !== undefined){
             clock.reset();
-            if (isWork === true) {
-                $("#startWork").text("Start");
-                clockUpdate(workDiv, clock.getTimeLeft()); 
-            }else{
-                $("#startRelax").text("Start");
-                clockUpdate(relaxDiv, clock.getTimeLeft()); 
-            };
+            $("#"+classPrefix+"Start").text("Start");
+            clockUpdate($("#"+classPrefix+"Div"), clock.getTimeLeft());
         }
-
     });
     
 
