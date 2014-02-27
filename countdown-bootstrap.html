@@ -37,22 +37,22 @@
 
             <label class="hours">
               Hours
-              <input type="text" class="work" id="workHour" placeholder="h"/>
+              <input type="text" class="work time" id="workHour" placeholder="h"/>
             </label>
 
             <label class="minutes">
               Minutes
-              <input type="text" class="work" id="workMinute" placeholder="m"/>
+              <input type="text" class="work time" id="workMinute" placeholder="m"/>
             </label>
 
             <label class="seconds">
               Seconds
-              <input type="text" class="work" id="workSecond" placeholder="s"/>
+              <input type="text" class="work time" id="workSecond" placeholder="s"/>
             </label>
 
             <p></p>
 
-            <button type="button" class="btn btn-default btn-lg work start" id="workStart">Start</button>
+            <button type="button" class="btn btn-primary btn-lg work start" id="workStart" style="width:114px;">Start</button>
             <button type="button" class="btn btn-default btn-lg work reset" id="workReset">Reset</button>
           </div>
         </div>
@@ -68,26 +68,46 @@
 
             <label class="hours">
               Hours
-              <input type="number" class="relax" id="relaxHour" placeholder="h"/>
+              <input type="number" class="relax time" id="relaxHour" placeholder="h"/>
             </label>
 
             <label class="minutes">
               Minutes
-              <input type="number" class="relax" id="relaxMinute" placeholder="m"/>
+              <input type="number" class="relax time" id="relaxMinute" placeholder="m"/>
             </label>
 
             <label class="seconds">
               Seconds
-              <input type="number" class="relax" id="relaxSecond" placeholder="s"/>
+              <input type="number" class="relax time" id="relaxSecond" placeholder="s"/>
             </label>
 
             <p></p>
 
-            <button type="button" class="btn btn-default btn-lg relax start" id="relaxStart" disabled="disabled">Start</button>
+            <button type="button" class="btn btn-primary btn-lg relax start" id="relaxStart" disabled="disabled" style="width:114px;">Start</button>
             <button type="button" class="btn btn-default btn-lg relax reset" id="relaxReset" disabled="disabled">Reset</button>
           </div>
         </div>
         <p></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6" style="text-align:center;">
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label for="alarmURI">Youtube Alarm</label>
+            <input type="url" class="form-control" id="workAlarmURI">
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6" style="text-align:center;">
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label for="alarmURI">Youtube Alarm</label>
+            <input type="url" class="form-control" id="relaxAlarmURI">
+          </div>
+        </form>
       </div>
     </div>
 
@@ -108,25 +128,21 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
-        <div class="audio_holder" style="display: none;text-align: center;">
-          <audio id="audio_player" controls="controls"> 
-            <source src="audio/test.mp3" type='audio/mpeg' />
-            Your browser does not support the audio tag.
-          </audio>
-        </div>
 
-        
+      <div class="col-md-6">
+        <div id="workAudio_holder" class="alarm_holder" style="display: none;text-align: center;">
+        </div>
       </div>
-      <div class="col-md-6">for the settings</div>
+
+      <div class="col-md-6">
+        <div id="relaxAudio_holder" class="alarm_holder" style="display: none;text-align: center;">
+        </div>
+      </div>
     </div>
 
-  </div>
+    
 
-  <!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
+  </div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -134,14 +150,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Time's up!</h4>
       </div>
       <div class="modal-body">
-        ...
+        <h1>Time to Switch!</h1>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="dismiss">Stop the Alarm</button>
       </div>
     </div>
   </div>

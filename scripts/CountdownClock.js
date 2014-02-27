@@ -65,7 +65,7 @@ function clockUpdate(clock, timeLeft){
 	clock.find('.display').append(digit_holder);
 }
 
-function elementsUpdate(elements){
+function elementsUpdate(elements, clickedClassPrefix){
 	elements.startButtonToChangeText.text("Start");
 	var toEnable = elements.buttonToEnable;
 	var toDisable = elements.buttonToDisable;
@@ -73,17 +73,16 @@ function elementsUpdate(elements){
 	$("button." + toEnable).removeAttr("disabled");
 	$("button." + toDisable).attr("disabled", "disabled");
 
-	// elements.startButtonToEnable.removeAttr("disabled");
-	// elements.resetButtonToEnable.removeAttr("disabled");
 
-	// elements.startButtonToDisable.attr("disabled", "disabled");
-	// elements.resetButtonToDisable.attr("disabled", "disabled");
-
-	elements.playerHolder.show();
-	elements.player.play();
-
-	elements.playerHolder.append('<div><iframe id="workVideo" width="250" height="125" src="http://www.youtube.com/embed/oHg5SJYRHA0?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
-	alert("Work Complete!");
+	var videoURI = $("#" + clickedClassPrefix + "AlarmURI").val();
+	var matches = videoURI.match(/youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)/);
+	if(matches){
+		var videoID = matches[1];
+		elements.playerHolder.append('<div><iframe width="250" height="125" src="http://www.youtube.com/embed/'+ videoID +'?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
+	}else{
+		elements.playerHolder.append('<div><iframe width="250" height="125" src="http://www.youtube.com/embed/oHg5SJYRHA0?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
+	}
+	$('#myModal').modal('show');
 }
 
 function CountdownClock(hours, minutes, seconds){
@@ -99,12 +98,12 @@ function CountdownClock(hours, minutes, seconds){
 		return timeLeft;
 	}
 
-	this.start = function(elementsUpdate, elements, clockUpdate, clockDiv){
+	this.start = function(elementsUpdate, elements, clockUpdate, clockDiv, clickedClassPrefix){
 		clockHandler = setInterval(function(){ // here we do not need to pass any parameters, something about closure right?
 
 			if(timeLeft == 0){
 				clearInterval(clockHandler);
-				elementsUpdate(elements);
+				elementsUpdate(elements, clickedClassPrefix);
 			}
 
 			timeLeft--;

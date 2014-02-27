@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 	var clock;
 
-    $("input").keyup(function(){
+    $("input.time").keyup(function(){
     	var v = this.value;
    		var vReplaced = v.replace(/[^0-9]/g, '');
     	if ( v != vReplaced) {
@@ -122,11 +122,10 @@ $( document ).ready(function() {
                 startButtonToChangeText: $(this),
                 buttonToEnable: unClickedClassPrefix,
                 buttonToDisable: clickedClassPrefix,
-                playerHolder: $(".audio_holder"),
-                player: $("#audio_player")[0]
+                playerHolder: $("#"+clickedClassPrefix+"Audio_holder")
             };
 
-            clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"));
+            clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"), clickedClassPrefix);
         }else{
             $(this).text("Resume");
             clock.pause();
@@ -155,5 +154,10 @@ $( document ).ready(function() {
 		player.pause();
 		player.currentTime = 0;
 	});
+
+    $('#myModal').on('hidden.bs.modal', function (e) {
+      // stop the alarm
+      $(".alarm_holder").empty();
+    })
 
 });
