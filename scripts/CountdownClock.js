@@ -73,14 +73,13 @@ function elementsUpdate(elements, clickedClassPrefix){
 	$("button." + toEnable).removeAttr("disabled");
 	$("button." + toDisable).attr("disabled", "disabled");
 
-
 	var videoURI = $("#" + clickedClassPrefix + "AlarmURI").val();
 	var matches = videoURI.match(/youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)/);
 	if(matches){
 		var videoID = matches[1];
 		elements.playerHolder.append('<div><iframe width="250" height="125" src="http://www.youtube.com/embed/'+ videoID +'?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
 	}else{
-		elements.playerHolder.append('<div><iframe width="250" height="125" src="http://www.youtube.com/embed/oHg5SJYRHA0?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
+		elements.playerHolder.append('<audio autoplay controls><source src="audio/audio.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>')
 	}
 	$('#myModal').modal('show');
 }
