@@ -12,38 +12,38 @@ $( document ).ready(function() {
     // retrieve user supplied time units
     if(typeof(Storage)!=="undefined"){
         // for the work clock
-        if(localStorage.workHours !=="undefined"){
+        if(localStorage.workHours){
             $("#workHour").val(localStorage.workHours);
         }else{
             $("#workHour").val(0);
         }
 
-        if(localStorage.workMinutes !=="undefined"){
+        if(localStorage.workMinutes){
             $("#workMinute").val(localStorage.workMinutes);
         }else{
             $("#workMinute").val(25);
         }
 
-        if(localStorage.workSeconds !=="undefined"){
+        if(localStorage.workSeconds){
             $("#workSecond").val(localStorage.workSeconds);
         }else{
             $("#workSecond").val(0);
         }
 
         // for the relax clock
-        if(localStorage.relaxHours !=="undefined"){
+        if(localStorage.relaxHours){
             $("#relaxHour").val(localStorage.relaxHours);
         }else{
             $("#relaxHour").val(0);
         }
 
-        if(localStorage.relaxMinutes !=="undefined"){
+        if(localStorage.relaxMinutes){
             $("#relaxMinute").val(localStorage.relaxMinutes);
         }else{
             $("#relaxMinute").val(5);
         }
 
-        if(localStorage.relaxSeconds !=="undefined"){
+        if(localStorage.relaxSeconds){
             $("#relaxSecond").val(localStorage.relaxSeconds);
         }else{
             $("#relaxSecond").val(0);
