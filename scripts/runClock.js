@@ -97,6 +97,11 @@ $( document ).ready(function() {
             }
 
             clock = new CountdownClock(hours, minutes, seconds);
+
+            // do not forget to show the clock face
+            $("#" + clickedClassPrefix + "Div").fadeIn('slow');
+
+            $("#" + unClickedClassPrefix + "Div").hide("slow");
         }
 
         if(clock.getTimeLeft() <= 0){
@@ -150,8 +155,5 @@ $( document ).ready(function() {
 		player.pause();
 		player.currentTime = 0;
 	});
-
-
-
 
 });

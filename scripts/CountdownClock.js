@@ -81,6 +81,8 @@ function elementsUpdate(elements){
 
 	elements.playerHolder.show();
 	elements.player.play();
+
+	elements.playerHolder.append('<div><iframe id="workVideo" width="250" height="125" src="http://www.youtube.com/embed/oHg5SJYRHA0?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
 	alert("Work Complete!");
 }
 
