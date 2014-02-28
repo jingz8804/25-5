@@ -30,6 +30,10 @@ $( document ).ready(function() {
             $("#workSecond").val(0);
         }
 
+        if(localStorage.workAlarmURI){
+            $("#workAlarmURI").val(localStorage.workAlarmURI);
+        }
+
         // for the relax clock
         if(localStorage.relaxHours){
             $("#relaxHour").val(localStorage.relaxHours);
@@ -49,6 +53,10 @@ $( document ).ready(function() {
             $("#relaxSecond").val(0);
         }
 
+        if(localStorage.relaxAlarmURI){
+            $("#relaxAlarmURI").val(localStorage.relaxAlarmURI);
+        }
+
     }
     
     $(".start").click(function(){
@@ -64,6 +72,11 @@ $( document ).ready(function() {
             clickedClassPrefix = "relax";
             unClickedClassPrefix = "work";
         }
+
+        // disable the time input
+        $("#"+clickedClassPrefix+"Hour").attr("disabled", "disabled");
+        $("#"+clickedClassPrefix+"Minute").attr("disabled", "disabled");
+        $("#"+clickedClassPrefix+"Second").attr("disabled", "disabled");
 
         // we only read the user input and CREATE NEW CLOCK when the button is in "Start" mode
         if(buttonText == "Start"){
@@ -145,6 +158,11 @@ $( document ).ready(function() {
             $("#"+clickedClassPrefix+"Start").text("Start");
             clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft());
         }
+
+        // enable the time input
+        $("#"+clickedClassPrefix+"Hour").removeAttr("disabled");
+        $("#"+clickedClassPrefix+"Minute").removeAttr("disabled");
+        $("#"+clickedClassPrefix+"Second").removeAttr("disabled");
     });
     
 

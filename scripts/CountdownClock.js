@@ -77,10 +77,19 @@ function elementsUpdate(elements, clickedClassPrefix){
 	var matches = videoURI.match(/youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)/);
 	if(matches){
 		var videoID = matches[1];
+		if (typeof(Storage)!=="undefined"){ // we only save the one that got played
+			localStorage.setItem(clickedClassPrefix + "AlarmURI", videoURI);
+		}
 		elements.playerHolder.append('<div><iframe width="250" height="125" src="http://www.youtube.com/embed/'+ videoID +'?controls=0&showinfo=0&rel=0&autoplay=1" frameborder="0"></iframe></div>')
 	}else{
 		elements.playerHolder.append('<audio autoplay controls><source src="audio/audio.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>')
 	}
+
+	// enable the time input
+    $("#"+clickedClassPrefix+"Hour").removeAttr("disabled");
+    $("#"+clickedClassPrefix+"Minute").removeAttr("disabled");
+    $("#"+clickedClassPrefix+"Second").removeAttr("disabled");
+        
 	$('#myModal').modal('show');
 }
 

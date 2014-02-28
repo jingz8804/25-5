@@ -1,6 +1,8 @@
 .jumbotron {
 	padding-top: 10px;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
+    margin-bottom: 10px;
+
 }
 
 
@@ -10,8 +12,8 @@
 
 .clock{
 	width:370px;
-	padding:40px;
-	margin:30px auto 30px;
+	padding:30px;
+	margin:20px auto 20px;
 	position:relative;
 	display: none;
 }
@@ -297,8 +299,7 @@ input::-webkit-inner-spin-button {
     display: none;
 }
 
-#alarm-dialog, 
-#time-is-up{
+#alarm-dialog{
 	text-align:center;
 }
 
@@ -351,19 +352,4 @@ input::-webkit-inner-spin-button {
 	background-image:linear-gradient(top, #86d3e4, #82cddd);
 
 	border-color:#72c1d2;
-}
-
-
-#time-is-up{
-	height: 240px;
-}
-
-#time-is-up h2{
-	padding: 60px 0 40px;
-	font-size: 30px;
-}
-
-#time-is-up .button{
-	padding: 12px 20px;
-	box-shadow: 0 2px 2px #eee;
 }
