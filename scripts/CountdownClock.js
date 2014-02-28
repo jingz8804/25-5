@@ -65,6 +65,27 @@ function clockUpdate(clock, timeLeft){
 	clock.find('.display').append(digit_holder);
 }
 
+function notify(){
+	var havePermission = window.webkitNotifications.checkPermission();
+	if(havePermission == 0){
+		// 0 means permission allowed
+		var note = window.webkitNotifications.createNotification(
+			'http://i.stack.imgur.com/dmHl0.png',
+			"Time's up!",
+			"Click here to stop the alarm!");
+
+		note.onclick = function(){
+			// stop the alarm, close the modal, and close itself
+			$(".alarm_holder").empty();
+			$('#myModal').modal('hide');
+			note.close();
+		};
+		note.show();
+	}else{
+		window.webkitNotifications.requestPermission();
+	}
+}
+
 function elementsUpdate(elements, clickedClassPrefix){
 	elements.startButtonToChangeText.text("Start");
 	var toEnable = elements.buttonToEnable;
@@ -89,8 +110,13 @@ function elementsUpdate(elements, clickedClassPrefix){
     $("#"+clickedClassPrefix+"Hour").removeAttr("disabled");
     $("#"+clickedClassPrefix+"Minute").removeAttr("disabled");
     $("#"+clickedClassPrefix+"Second").removeAttr("disabled");
+
+    // here we add the desktop notification
+	notify();
         
 	$('#myModal').modal('show');
+
+	
 }
 
 function CountdownClock(hours, minutes, seconds){

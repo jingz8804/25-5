@@ -178,4 +178,6 @@ $( document ).ready(function() {
       $(".alarm_holder").empty();
     })
 
+    // window.webkitNotifications.requestPermission();
+
 });
