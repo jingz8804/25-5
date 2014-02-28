@@ -177,7 +177,4 @@ $( document ).ready(function() {
       // stop the alarm
       $(".alarm_holder").empty();
     })
-
-    // window.webkitNotifications.requestPermission();
-
 });
