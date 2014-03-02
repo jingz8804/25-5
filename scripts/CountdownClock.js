@@ -87,12 +87,14 @@ function notify(){
 }
 
 function elementsUpdate(elements, clickedClassPrefix){
-	elements.startButtonToChangeText.text("Start");
-	var toEnable = elements.buttonToEnable;
-	var toDisable = elements.buttonToDisable;
+	// hide the pause button
+	$("#" + clickedClassPrefix + "Pause").hide();
+	
+	// var toEnable = elements.buttonToEnable;
+	// var toDisable = elements.buttonToDisable;
 
-	$("button." + toEnable).removeAttr("disabled");
-	$("button." + toDisable).attr("disabled", "disabled");
+	// $("button." + toEnable).removeAttr("disabled");
+	// $("button." + toDisable).attr("disabled", "disabled");
 
 	var videoURI = $("#" + clickedClassPrefix + "AlarmURI").val();
 	var matches = videoURI.match(/youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)/);
@@ -107,9 +109,9 @@ function elementsUpdate(elements, clickedClassPrefix){
 	}
 
 	// enable the time input
-    $("#"+clickedClassPrefix+"Hour").removeAttr("disabled");
-    $("#"+clickedClassPrefix+"Minute").removeAttr("disabled");
-    $("#"+clickedClassPrefix+"Second").removeAttr("disabled");
+    // $("#"+clickedClassPrefix+"Hour").removeAttr("disabled");
+    // $("#"+clickedClassPrefix+"Minute").removeAttr("disabled");
+    // $("#"+clickedClassPrefix+"Second").removeAttr("disabled");
 
     // here we add the desktop notification
 	notify();
@@ -160,7 +162,12 @@ function CountdownClock(hours, minutes, seconds){
 		}
 	}
 
-	this.setTime = function(time){
-		timeLeft = time;
+	this.setTotalTime = function(hours, minutes, seconds){
+		totalTime = hours * 3600 + minutes * 60 + seconds;
+		timeLeft = totalTime;
+	}
+
+	this.setTime = function(hours, minutes, seconds){
+		timeLeft = hours * 3600 + minutes * 60 + seconds;
 	}
 }

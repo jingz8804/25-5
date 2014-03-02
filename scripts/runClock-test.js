@@ -58,32 +58,37 @@ $( document ).ready(function() {
         }
 
     }
-    
-    $(".start").click(function(){
-        var havePermission = window.webkitNotifications.checkPermission();
-        if(havePermission == 1){
-            window.webkitNotifications.requestPermission();
-        }
-        var hours;
-        var minutes;
-        var seconds;
-        var buttonText = $(this).text();
 
+    var previouslyClicked = "";
+    var isSwitched = false;
+
+    var clickedClassPrefix;
+    var unClickedClassPrefix;
+    
+    $("button").click(function(){
+        // check which side is clicked
         var isWork = $(this).hasClass("work");
-        var clickedClassPrefix = "work";
-        var unClickedClassPrefix = "relax";
+        clickedClassPrefix = "work";
+        unClickedClassPrefix = "relax";
         if(isWork !== true){
             clickedClassPrefix = "relax";
             unClickedClassPrefix = "work";
         }
 
-        // disable the time input
-        $("#"+clickedClassPrefix+"Hour").attr("disabled", "disabled");
-        $("#"+clickedClassPrefix+"Minute").attr("disabled", "disabled");
-        $("#"+clickedClassPrefix+"Second").attr("disabled", "disabled");
+        if ((previouslyClicked !== "") && (clickedClassPrefix !== previouslyClicked)){
+            isSwitched = true;
+        }
 
-        // we only read the user input and CREATE NEW CLOCK when the button is in "Start" mode
-        if(buttonText == "Start"){
+        previouslyClicked = clickedClassPrefix;
+
+        // get the button text
+        var buttonText = $(this).text();
+        var hours;
+        var minutes;
+        var seconds;
+
+        if(buttonText == "START COUNTDOWN"){
+            // if we are clicking on the Start button
             hours = $("#"+clickedClassPrefix+"Hour").val();
             minutes = $("#"+clickedClassPrefix+"Minute").val();
             seconds = $("#"+clickedClassPrefix+"Second").val();
@@ -113,89 +118,62 @@ $( document ).ready(function() {
                 localStorage.setItem(clickedClassPrefix + "Seconds", seconds);
             }
 
-            clock = new CountdownClock(hours, minutes, seconds);
+            // be sure to always change the text of the pause button
+            $("#" + clickedClassPrefix + "Pause").text("PAUSE");
 
-            // do not forget to show the clock face
-            $("#" + clickedClassPrefix + "Div").fadeIn('slow');
+            if (clock){
+                clock.pause(); // must pause first to clear the time interval, otherwise it will keep going
+                clock.setTotalTime(hours, minutes, seconds);
+                if (isSwitched){
+                    // do not forget to show the clock face
+                    $("#" + clickedClassPrefix + "Div").fadeIn('slow');
 
-            $("#" + unClickedClassPrefix + "Div").hide("slow");
-        }
+                    $("#" + unClickedClassPrefix + "Div").hide("slow");
 
-        if(clock.getTimeLeft() <= 0){
-            clock.setTime(0, 0, 0);
-        }
+                    $("#" + clickedClassPrefix + "Pause").show('fast');
+                    $("#" + unClickedClassPrefix + "Pause").hide('slow');
+                }
+            }else{
+                clock = new CountdownClock(hours, minutes, seconds);
+                // do not forget to show the clock face
+                $("#" + clickedClassPrefix + "Div").fadeIn('slow');
 
-        // we should change the clockUpdate function to show the digital clock
-        clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft())
-        
+                $("#" + unClickedClassPrefix + "Div").hide("slow");
 
-        // When pressing the "Start" or "Resume" button
-        if(buttonText == "Start" || buttonText == "Resume"){
+                $("#" + clickedClassPrefix + "Pause").show('fast');
+                $("#" + unClickedClassPrefix + "Pause").hide('slow');
+            }
 
-            // we set the button text to "Pause"
-            $(this).text("Pause");
+            if(clock.getTimeLeft() <= 0){
+                clock.setTime(0, 0, 0);
+            }
+
+            // immediately show the time
+            clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft());
 
             var elements = {
-                startButtonToChangeText: $(this),
-                buttonToEnable: unClickedClassPrefix,
-                buttonToDisable: clickedClassPrefix,
+                playerHolder: $("#"+clickedClassPrefix+"Audio_holder")
+            };
+
+            clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"), clickedClassPrefix);
+        }else if(buttonText == "RESUME"){
+            $(this).text("PAUSE");
+            if(clock.getTimeLeft() <= 0){
+                clock.setTime(0, 0, 0);
+            }
+            // clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft())
+            var elements = {
                 playerHolder: $("#"+clickedClassPrefix+"Audio_holder")
             };
 
             clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"), clickedClassPrefix);
         }else{
-            $(this).text("Resume");
-            clock.pause();
-        }
-    });
-
-    $(".pause").click(function(){
-        var buttonText = $(this).text();
-
-        var isWork = $(this).hasClass("work");
-        var clickedClassPrefix = "work";
-        var unClickedClassPrefix = "relax";
-        if(isWork !== true){
-            clickedClassPrefix = "relax";
-            unClickedClassPrefix = "work";
-        }
-
-        if (buttonText == "PAUSE") {
+            // this is to pause the clock
             $(this).text("RESUME");
             clock.pause();
-        }else{
-            $(this).text("PAUSE");
-
-            var elements = {
-                buttonToChangeTextAndHide: $(this),
-                buttonToEnable: unClickedClassPrefix,
-                buttonToDisable: clickedClassPrefix,
-                playerHolder: $("#"+clickedClassPrefix+"Audio_holder")
-            };
-
-            clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"), clickedClassPrefix);
-        }
-    });
-
-    $(".reset").click(function(){
-        var isWork = $(this).hasClass("work");
-        var clickedClassPrefix = "work";
-        if(isWork !== true){
-            clickedClassPrefix = "relax";
         }
 
-        if(clock !== undefined){
-            // alert("here!");
-            clock.reset();
-            $("#"+clickedClassPrefix+"Start").text("Start");
-            clockUpdate($("#"+clickedClassPrefix+"Div"), clock.getTimeLeft());
-        }
-
-        // enable the time input
-        $("#"+clickedClassPrefix+"Hour").removeAttr("disabled");
-        $("#"+clickedClassPrefix+"Minute").removeAttr("disabled");
-        $("#"+clickedClassPrefix+"Second").removeAttr("disabled");
-    });
+    })
     
 
 	$(".audio_holder").click(function(){
