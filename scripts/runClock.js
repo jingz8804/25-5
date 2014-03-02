@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-	var clock;
+    var clock;
 
     $("input.time").keyup(function(){
     	var v = this.value;
@@ -60,6 +60,10 @@ $( document ).ready(function() {
     }
     
     $(".start").click(function(){
+        var havePermission = window.webkitNotifications.checkPermission();
+        if(havePermission == 1){
+            window.webkitNotifications.requestPermission();
+        }
         var hours;
         var minutes;
         var seconds;

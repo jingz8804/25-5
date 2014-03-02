@@ -78,7 +78,7 @@ function notify(){
 			// stop the alarm, close the modal, and close itself
 			$(".alarm_holder").empty();
 			$('#myModal').modal('hide');
-			note.close();
+			note.cancel();
 		};
 		note.show();
 	}else{
