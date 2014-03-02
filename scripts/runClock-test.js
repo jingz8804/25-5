@@ -88,6 +88,10 @@ $( document ).ready(function() {
         var seconds;
 
         if(buttonText == "START COUNTDOWN"){
+            var havePermission = window.webkitNotifications.checkPermission();
+            if(havePermission == 1){
+                window.webkitNotifications.requestPermission();
+            }
             // if we are clicking on the Start button
             hours = $("#"+clickedClassPrefix+"Hour").val();
             minutes = $("#"+clickedClassPrefix+"Minute").val();
