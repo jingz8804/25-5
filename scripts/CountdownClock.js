@@ -64,12 +64,12 @@ function clockUpdate(clock, timeLeft){
 
 	clock.find('.display').append(digit_holder);
 }
-
+var note;
 function notify(){
 	var havePermission = window.webkitNotifications.checkPermission();
 	if(havePermission == 0){
 		// 0 means permission allowed
-		var note = window.webkitNotifications.createNotification(
+		note = window.webkitNotifications.createNotification(
 			'http://i.stack.imgur.com/dmHl0.png',
 			"Time's up!",
 			"Click here to stop the alarm!");

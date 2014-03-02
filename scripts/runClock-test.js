@@ -190,5 +190,6 @@ $( document ).ready(function() {
     $('#myModal').on('hidden.bs.modal', function (e) {
       // stop the alarm
       $(".alarm_holder").empty();
+      note.cancel();
     })
 });
