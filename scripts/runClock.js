@@ -171,7 +171,7 @@ $( document ).ready(function() {
             };
 
             clock.start(elementsUpdate, elements, clockUpdate, $("#"+clickedClassPrefix+"Div"), clickedClassPrefix);
-        }else{
+        }else if(buttonText == "PAUSE"){ // the modal has a button, here I have to specify this otherwise it will change the modal button too.
             // this is to pause the clock
             $(this).text("RESUME");
             clock.pause();
