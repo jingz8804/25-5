@@ -46,7 +46,12 @@ function clockUpdate(clock, timeLeft){
 	minutes = parseInt(timeLeft / 60);
 	seconds = parseInt(timeLeft % 60);
 //	clock.html(hours + " h, " + minutes + " m, " + seconds + " s");
-	document.title = minutes + "m"+ seconds+"s";
+	if(hours!=0){
+		document.title = hours+'h'+minutes + "m"+ seconds+"s";
+	}else{
+		document.title = minutes + "m"+ seconds+"s";
+	}
+	
 	var h1, h2, m1, m2, s1, s2;
 	h1 = parseInt(hours / 10);
 	h2 = hours % 10;
