@@ -136,6 +136,10 @@ $( document ).ready(function() {
 
                     $("#" + clickedClassPrefix + "Pause").show('fast');
                     $("#" + unClickedClassPrefix + "Pause").hide('slow');
+                }else{
+                    // do not forget to show the PAUSE button
+                    $("#" + clickedClassPrefix + "Pause").show('fast');
+                    $("#" + unClickedClassPrefix + "Pause").hide('slow');
                 }
             }else{
                 clock = new CountdownClock(hours, minutes, seconds);
